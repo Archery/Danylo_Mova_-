@@ -1,49 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-/*
-import sys
-print("ПЕРЕВЕДЕННЯ ЧиСЕЛ")
-o = int(input("ВВЕДІТЬ О = ? ")) 
-bazza = int(input("ВВедіть БАЗУ = ? "))
-if (bazza > 10):
-  print("база більше 10")
-  sys.exit()
-  
-s = ""
+char* IntToString(int x){
+    int length = snprintf( NULL, 0, "%i", x );
+    char* str = malloc( length + 1);
+    snprintf( str, length + 1, "%i", x );
+    return str;
+}
 
-while o > 0:
-    s = str(o % bazza) + s
-    o = o // bazza
-print(s)
-*/
+char* concat(const char *s1, const char *s2)
+{
+    char *result = malloc(strlen(s1) + strlen(s2) + 1); // +1 for the null-terminator
+    // in real code you would check for errors in malloc here
+    strcpy(result, s1);
+    strcat(result, s2);
+    return result;
+}
 
 int main(void) { //початок програми
-    int o=24, bazza=3;
-    char* s;
-    if (bazza > 10){
+    int o = 24, bazza = 3;
+    printf("Введіть десяткове число ");
+    scanf("%i", &o);
+    printf("Введіть нову базу для числа ");
+    scanf("%i", &bazza);
+
+    if (bazza > 10) {
       printf("bazza > 10");
       return -1; 
     }
-    while (o>0) {
-        int x = -42;
-        int length = snprintf( NULL, 0, "%d", x );
-        char* str = malloc( length + 1 );
-        snprintf( str, length + 1, "%d", x );
 
-
-
-        s = (o% bazza)+s;
-        o=o/bazza;
+    char* s = "";
+    while (o > 0) {
+        s = concat(IntToString(o % bazza), s);
+        o = o / bazza;
     }
-    printf("%s",s);
+    printf("%s\n", s);
 }
-
-int x = -42;
-int length = snprintf( NULL, 0, "%d", x );
-char* str = malloc( length + 1 );
-snprintf( str, length + 1, "%d", x );
-...
-free(str);
-    
-    
